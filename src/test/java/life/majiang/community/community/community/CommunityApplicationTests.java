@@ -1,4 +1,4 @@
-package life.majiang.community.community;
+package life.majiang.community.community.community;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
