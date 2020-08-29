@@ -12,5 +12,5 @@ public interface UserMapper {
     public void insert(User user);
 
     @Select("select * from user where token = #{token}")
-    User findByToken(@Param("token") String token);
+    User findByToken(@Param("token") String token);//当形参不是对象时，需要指定参数，即用@Param("token")
 }

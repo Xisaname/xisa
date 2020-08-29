@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IndexController {
     @Autowired
-    private UserMapper userMapper;
+    private UserMapper userMapper;//自动装配
 
-    @GetMapping("/")
+    @GetMapping("/")//主页面，在第一层，当有重定向到"/"时,会重新执行该controller
     public String index(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
+        Cookie[] cookies = request.getCookies();//获得全部的cookie
         for (Cookie cookie: cookies
              ) {
-            if(cookie.getName().equals("token")){
-                String token=cookie.getValue();
-                User user=userMapper.findByToken(token);
+            if(cookie.getName().equals("token")){//找到叫token的cookie
+                String token=cookie.getValue();//获取value值
+                User user=userMapper.findByToken(token);//通过数据库查找，找到相关的用户信息
                 if(user!=null){
-                    request.getSession().setAttribute("user",user);
+                    request.getSession().setAttribute("user",user);//存储到session中持久化
                 }
                 break;
             }
         }
-        return "index";
+        return "index";//回到页面
     }
 }
