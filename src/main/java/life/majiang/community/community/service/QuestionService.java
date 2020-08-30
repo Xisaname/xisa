@@ -1,5 +1,6 @@
 package life.majiang.community.community.service;
 
+import life.majiang.community.community.dto.PaginationDTO;
 import life.majiang.community.community.dto.QuestionDTO;
 import life.majiang.community.community.mapper.QuestionMapper;
 import life.majiang.community.community.mapper.UserMapper;
@@ -21,16 +22,27 @@ public class QuestionService {
     @Autowired
     UserMapper userMapper;
 
-    public List<QuestionDTO> list() {
-        List<Question>questions=questionMapper.list();
-        List<QuestionDTO>questionDTOS=new ArrayList<>();
-        for (Question question : questions) {
-            User user=userMapper.findById(question.getCreator());
-            QuestionDTO questionDTO=new QuestionDTO();
-            BeanUtils.copyProperties(question,questionDTO);
+    //将问题放到了页面层
+    public PaginationDTO list(Integer page, Integer size) {
+
+        Integer offset = size * (page - 1);
+        //获取所有问题
+        List<Question> questions = questionMapper.list(offset, size);
+        //将问题与用户组合起来形成一个对象
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+
+        PaginationDTO paginationDTO = new PaginationDTO();
+
+        for (Question question : questions) {//该循环即是将用户与其所提出的问题一一对应
+            User user = userMapper.findById(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);//将两者相同的部分复制到DTO
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        return questionDTOS;
+        paginationDTO.setQuestions(questionDTOS);//将所有问题放到页面层次
+        Integer totalCount = questionMapper.count();//获取总的问题数，以便进行页面划分
+        paginationDTO.setPagination(totalCount, page, size);//设置页面
+        return paginationDTO;
     }
 }

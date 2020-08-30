@@ -28,13 +28,13 @@ public class PublishController {
 
     @PostMapping("/publish")
     public String doPublish(
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "tag", required = false) String tag,
-            HttpServletRequest request,
-            Model model
+            @RequestParam(value = "title", required = false) String title,//获取title值
+            @RequestParam(value = "description", required = false) String description,//获取描述内容
+            @RequestParam(value = "tag", required = false) String tag,//获取标签内容
+            HttpServletRequest request,//设置请求对象
+            Model model//用model将我们所要表达的内容传回到页面
     ) {
-        model.addAttribute("title", title);
+        model.addAttribute("title", title);//用于回显
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
         if (title == null || title == "") {
@@ -49,11 +49,11 @@ public class PublishController {
             model.addAttribute("error", "标签不能为空");
             return "publish";
         }
-
+        //获取所有的cookie
         Cookie[] cookies = request.getCookies();
-        User user = null;
+        User user = null;//用于后续判断
         if (cookies != null && cookies.length != 0)
-            for (Cookie cookie : cookies
+            for (Cookie cookie : cookies//遍历寻找我们自己的token
             ) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
