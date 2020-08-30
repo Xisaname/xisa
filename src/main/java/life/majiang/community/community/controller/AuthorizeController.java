@@ -50,6 +50,8 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());//用的是格林尼治时间
             user.setGmtModified(user.getGmtCreate());
+            user.setBio(githubUser.getBio());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             userMapper.insert(user);//插入到数据库中
             response.addCookie(new Cookie("token",token));//添加cookie，用于登录持久化
             return "redirect:/";//重定向，在显示前一页面的同时，"/"即是主页面index。这样的做法隐藏了code相关信息。
