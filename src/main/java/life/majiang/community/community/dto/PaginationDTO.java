@@ -16,21 +16,17 @@ public class PaginationDTO {
     private Integer page;//当前页码
     private List<Integer> pages = new ArrayList<>();//显示的页列表
     private Integer totalCount;//问题总数
+    private Integer totalPage;//页面总数
 
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
-        Integer totalPage;
-        //计算需要的总页数
-        if (totalCount % size == 0) {
-            totalPage = totalCount / size;
-        } else {
-            totalPage = totalCount / size + 1;
-        }
+    public void setPagination(Integer totalCount, Integer page, Integer size,Integer totalPage) {
+        this.page=page;
+        this.totalPage=totalPage;
         //往pages里赋值
         pages.add(page);
         for(int i=1;i<=3;i++){
             if(page-i>=1){
-                pages.add(page-i,0);
+                pages.add(0,page-i);
             }
 
             if(page+i<=totalPage){

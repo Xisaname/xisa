@@ -24,7 +24,18 @@ public class QuestionService {
 
     //将问题放到了页面层
     public PaginationDTO list(Integer page, Integer size) {
-
+        Integer totalCount = questionMapper.count();//获取总的问题数，以便进行页面划分
+        Integer totalPage;
+        //计算需要的总页数
+        if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
+        }
+        if(page<1)
+            page=1;
+        if(page>totalPage)
+            page=totalPage;
         Integer offset = size * (page - 1);
         //获取所有问题
         List<Question> questions = questionMapper.list(offset, size);
@@ -41,8 +52,7 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOS);//将所有问题放到页面层次
-        Integer totalCount = questionMapper.count();//获取总的问题数，以便进行页面划分
-        paginationDTO.setPagination(totalCount, page, size);//设置页面
+        paginationDTO.setPagination(totalCount, page, size,totalPage);//设置页面
         return paginationDTO;
     }
 }

@@ -14,7 +14,7 @@ public interface QuestionMapper {
     void create (Question question);
 
     @Select("select * from question limit #{offset},#{size}")
-    List<Question> list(Integer offset, Integer size);
+    List<Question> list(@Param(value = "offset") Integer offset,@Param(value = "size") Integer size);
 
     @Select("select count(1) from question")
     Integer count();
