@@ -1,13 +1,16 @@
 package life.majiang.community.community.controller;
 
+import life.majiang.community.community.dto.QuestionDTO;
 import life.majiang.community.community.mapper.QuestionMapper;
 import life.majiang.community.community.mapper.UserMapper;
 import life.majiang.community.community.model.Question;
 import life.majiang.community.community.model.User;
+import life.majiang.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,8 +19,22 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class PublishController {
+
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id")Integer id,
+                       Model model){
+
+        QuestionDTO question = questionService.getById(id);
+        model.addAttribute("title", question.getTitle());//用于回显
+        model.addAttribute("description", question.getDescription());
+        model.addAttribute("tag", question.getTag());
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
+
     @Autowired
     private UserMapper userMapper;
 
@@ -31,6 +48,7 @@ public class PublishController {
             @RequestParam(value = "title", required = false) String title,//获取title值
             @RequestParam(value = "description", required = false) String description,//获取描述内容
             @RequestParam(value = "tag", required = false) String tag,//获取标签内容
+            @RequestParam(value = "id",required = false)Integer id,
             HttpServletRequest request,//设置请求对象
             Model model//用model将我们所要表达的内容传回到页面
     ) {
@@ -73,10 +91,8 @@ public class PublishController {
         question.setTag(tag);
         question.setDescription(description);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-
-        questionMapper.create(question);
+        question.setId(id);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }
