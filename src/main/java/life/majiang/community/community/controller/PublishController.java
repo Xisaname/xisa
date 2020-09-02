@@ -5,6 +5,7 @@ import life.majiang.community.community.mapper.QuestionMapper;
 import life.majiang.community.community.mapper.UserMapper;
 import life.majiang.community.community.model.Question;
 import life.majiang.community.community.model.User;
+import life.majiang.community.community.model.UserExample;
 import life.majiang.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -75,9 +77,13 @@ public class PublishController {
             ) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(token);
+                    List<User> users=userMapper.selectByExample(userExample);
+                    user=users.get(0);
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));
                     }
                     break;
                 }

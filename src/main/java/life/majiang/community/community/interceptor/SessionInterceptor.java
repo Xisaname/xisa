@@ -2,6 +2,7 @@ package life.majiang.community.community.interceptor;
 
 import life.majiang.community.community.mapper.UserMapper;
 import life.majiang.community.community.model.User;
+import life.majiang.community.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Service
 public class SessionInterceptor implements HandlerInterceptor {
@@ -25,9 +27,12 @@ public class SessionInterceptor implements HandlerInterceptor {
             ) {
                 if (cookie.getName().equals("token")) {//找到叫token的cookie
                     String token = cookie.getValue();//获取value值
-                    User user = userMapper.findByToken(token);//通过数据库查找，找到相关的用户信息
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);//存储到session中持久化
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(token);
+                    List<User> users=userMapper.selectByExample(userExample);
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));//存储到session中持久化
                     }
                     break;
                 }
