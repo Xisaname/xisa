@@ -26,7 +26,7 @@ public class PublishController {
     private QuestionService questionService;
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable(name = "id")Integer id,
+    public String edit(@PathVariable(name = "id")Long id,
                        Model model){
 
         QuestionDTO question = questionService.getById(id);
@@ -50,7 +50,7 @@ public class PublishController {
             @RequestParam(value = "title", required = false) String title,//获取title值
             @RequestParam(value = "description", required = false) String description,//获取描述内容
             @RequestParam(value = "tag", required = false) String tag,//获取标签内容
-            @RequestParam(value = "id",required = false)Integer id,
+            @RequestParam(value = "id",required = false)Long id,
             HttpServletRequest request,//设置请求对象
             Model model//用model将我们所要表达的内容传回到页面
     ) {
