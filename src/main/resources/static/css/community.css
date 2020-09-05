@@ -1,38 +1,122 @@
-body{
+body {
     background-image: url('theKingOfBug.PNG');
 }
+
 .main {
     background-color: white;
     margin: 30px;
 }
-.btn-publish{
+
+.questionRelated {
+    line-height: 20px;
+    font-size: 15px;
+    margin-left: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.btn-publish {
     float: right;
     margin-bottom: 15px;
 }
-.media-object{
+
+.media-object {
     width: 38px;
     height: 38px;
 }
-.media-body{
+
+.media-body {
     padding-top: 10px;
 }
-.media-user{
+
+.media-user {
     width: 30px;
     height: 30px;
 }
-.text-desc{
+
+.text-desc {
     font-size: 12px;
     font-weight: normal;
     color: #999999;
 }
-.profile .section{
+
+.profile .section {
     margin-top: 15px;
 }
-.comment{
+
+.comment {
     margin-top: 10px;
     margin-bottom: 20px;
 }
-.community-menu{
+
+.community-menu {
     color: #999;
     font-size: 13px;
+}
+
+.hr-style {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.comments {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu {
+    color: #999;
+    margin-top: 5px;
+}
+
+.btn-comment {
+    margin-top: 5px;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.sub-comments {
+    margin-top: 12px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding-top: 10px;
+    margin-bottom: 15px;
+}
+
+.menu .icon {
+    margin-right: 15px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.span-distance {
+    margin-right: 6px;
+}
+
+.publish-tag-tab {
+    display: none;
+    margin-top: 6px;
+}
+
+.menu .iconMessage {
+    font-size: 15px;
+    cursor: pointer;
+    display: inline-flex;
+}
+
+.menu .iconMessage:hover {
+    color: #499ef3;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
+
+.menu .active {
+    color: #499ef3;
+}
+
+.question-title {
+    margin-top: 25px;
 }
