@@ -97,6 +97,12 @@ body {
 .publish-tag-tab {
     display: none;
     margin-top: 6px;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info{
+    white-space: normal;
+    margin: 8px 8px;
 }
 
 .menu .iconMessage {

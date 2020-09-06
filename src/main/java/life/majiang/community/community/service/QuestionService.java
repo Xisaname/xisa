@@ -64,7 +64,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOS);//将所有问题放到页面层次
+        paginationDTO.setData(questionDTOS);//将所有问题放到页面层次
         paginationDTO.setPagination(totalCount, page, size, totalPage);//设置页面
         return paginationDTO;
     }
@@ -104,7 +104,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOS);//将所有问题放到页面层次
+        paginationDTO.setData(questionDTOS);//将所有问题放到页面层次
         paginationDTO.setPagination(totalCount, page, size, totalPage);//设置页面
         return paginationDTO;
     }

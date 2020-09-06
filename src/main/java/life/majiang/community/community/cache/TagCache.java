@@ -1,10 +1,12 @@
 package life.majiang.community.community.cache;
 
 import life.majiang.community.community.dto.TagDTO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TagCache {
     public static List<TagDTO> get(){
@@ -35,5 +37,15 @@ public class TagCache {
         tagDTOS.add(tool);
 
         return tagDTOS;
+    }
+
+    public static String filterInvalid(String tags){
+        String[] split = StringUtils.split(tags, ",");
+        List<TagDTO> tagDTOS = get();
+        //获取到所有合法标签
+        List<String> tagList = tagDTOS.stream().flatMap(tag -> tag.getTags().stream()).collect(Collectors.toList());
+        //将目标列表与合法列表进行对比，返回其中的不合法元素
+        String invalid = Arrays.stream(split).filter(t -> !tagList.contains(t)).collect(Collectors.joining(","));
+        return invalid;
     }
 }
