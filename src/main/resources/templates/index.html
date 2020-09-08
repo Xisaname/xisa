@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>BUG社区</title>
+    <link rel="short icon" href="https://avatars0.githubusercontent.com/u/52352730?s=400&u=80cf37b36cc1e74e99c4148e5a6fe799fbceebe6&v=4" ></link>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
@@ -37,7 +38,7 @@
                     <h4 class="media-heading">
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.getTitle()}"></a>
                     </h4>
-                    <span th:text="${question.getDescription()}"></span> <br>
+                    <span></span> <br>
                     <span class="text-desc">
                         <span th:text="${question.getCommentCount()}"></span> 个回复
                         • <span th:text="${question.getViewCount()}"></span> 次浏览
@@ -48,26 +49,26 @@
             <nav aria-label="Page navigation" style="float:right">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a href="/?page=1" aria-label="Previous">
+                        <a th:href="@{/(page=1,search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/(page=${pagination.page-1})}" aria-label="Previous">
+                        <a th:href="@{/(page=${pagination.page-1},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : ${pagination.pages}" th:class="${pagination.page==page}? 'active':''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}">
+                        <a th:href="@{/(page=${page},search=${search})}" th:text="${page}">
                         </a>
                     </li>
                     <li th:if="${pagination.showNext}">
-                        <a th:href="@{/(page=${pagination.page+1})}" aria-label="Previous">
+                        <a th:href="@{/(page=${pagination.page+1},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Previous">
+                        <a th:href="@{/(page=${pagination.totalPage},search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -76,6 +77,12 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h2>热门话题</h2>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a style="margin-left: 650px">网站由Xisaname制作</a>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a href="https://github.com/Xisaname" style="margin-left: 700px">github</a>
         </div>
     </div>
 </div>
