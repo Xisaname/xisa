@@ -63,6 +63,7 @@ public class CommentService {
 
             commentMapper.insert(comment);
             Comment parentComment = new Comment();
+            //自增
             parentComment.setId(comment.getParentId());
             parentComment.setCommentCount(1);
             commentExtMapper.incCommentCount(parentComment);
@@ -76,6 +77,7 @@ public class CommentService {
             }
             comment.setCommentCount(0);
             commentMapper.insert(comment);
+            //自增
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
             createNotify(comment,question.getCreator(), commentator.getName(), question.getTitle() ,NotificationTypeEnum.REPLY_QUESTION,question.getId());

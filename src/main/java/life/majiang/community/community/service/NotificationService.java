@@ -8,7 +8,9 @@ import life.majiang.community.community.exception.CustomizeErrorCode;
 import life.majiang.community.community.exception.CustomizeException;
 import life.majiang.community.community.mapper.NotificationMapper;
 import life.majiang.community.community.mapper.UserMapper;
-import life.majiang.community.community.model.*;
+import life.majiang.community.community.model.Notification;
+import life.majiang.community.community.model.NotificationExample;
+import life.majiang.community.community.model.User;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
@@ -53,7 +52,7 @@ public class NotificationService {
         example.createCriteria()
                 .andReceiverEqualTo(userId);
         example.setOrderByClause("gmt_create desc");
-        RowBounds rowBounds = new RowBounds(offset, size);
+        RowBounds rowBounds = new RowBounds(offset, size);//设置表的格式，这里设置的是每7行数据为一页，数据库中同样如此
         List<Notification> notifications = notificationMapper.selectByExampleWithRowbounds(example, rowBounds);
         if(notifications.size() == 0){
             return paginationDTO;
@@ -93,7 +92,7 @@ public class NotificationService {
         notificationMapper.updateByPrimaryKey(notification);
         NotificationDTO notificationDTO=new NotificationDTO();
         BeanUtils.copyProperties(notification,notificationDTO);
-        notificationDTO.setTypeName(NotificationTypeEnum.nameOfType(notification.getType()));
+        notificationDTO.setTypeName(NotificationTypeEnum.nameOfType(notification.getType()));//标记为已读
         return notificationDTO;
     }
 }

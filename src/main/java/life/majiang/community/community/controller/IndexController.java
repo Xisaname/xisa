@@ -17,12 +17,13 @@ public class IndexController {
     private QuestionService questionService;
 
     @GetMapping("/")//主页面，在第一层，当有重定向到"/"时,会重新执行该controller
+    //页面数据提取
     public String index(HttpServletRequest request,
                         Model model,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "7") Integer size,
                         @RequestParam(name = "search",required = false) String search){
-        PaginationDTO pagination = questionService.list(search,page,size);
+        PaginationDTO pagination = questionService.list(search,page,size);//根据search返回index所要展示的问题
         model.addAttribute("pagination", pagination);
         model.addAttribute("search", search);
         return "index";//回到页面

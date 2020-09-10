@@ -21,6 +21,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @GetMapping("/notification/{id}")
+    //消息通知逻辑体
     public String profile(@PathVariable(name = "id") Long id,
                           Model model,
                           HttpServletRequest request) {
@@ -28,9 +29,9 @@ public class NotificationController {
         if(user==null){
             return "redirect:/";
         }
-        NotificationDTO notificationDTO = notificationService.read(id,user);
+        NotificationDTO notificationDTO = notificationService.read(id,user);//根据id和user来获得所有通知
         if(NotificationTypeEnum.REPLY_COMMENT.getType()==notificationDTO.getType()||
-                NotificationTypeEnum.REPLY_QUESTION.getType()==notificationDTO.getType()) {
+                NotificationTypeEnum.REPLY_QUESTION.getType()==notificationDTO.getType()) {//当用户点击某条问题时，重定向到该问题
             return "redirect:/question/" + notificationDTO.getOuterId();
         }
         else {

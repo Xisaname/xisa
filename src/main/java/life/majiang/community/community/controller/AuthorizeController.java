@@ -64,9 +64,9 @@ public class AuthorizeController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response){
-        request.getSession().removeAttribute("user");
-        Cookie cookie=new Cookie("token",null);
-        cookie.setMaxAge(0);
+        request.getSession().removeAttribute("user");//删除session和cookie
+        Cookie cookie=new Cookie("token",null);//置空
+        cookie.setMaxAge(0);//立即死亡
         response.addCookie(cookie);
         return "redirect:/";
     }

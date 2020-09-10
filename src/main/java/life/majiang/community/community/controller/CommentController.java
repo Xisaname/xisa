@@ -27,7 +27,7 @@ public class CommentController {
     @Autowired
     private NotificationMapper notificationMapper;
 
-    @ResponseBody
+    @ResponseBody//构建伪html结构，将对象构建为json
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
     public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request){
@@ -37,7 +37,7 @@ public class CommentController {
             return ResultDTO.errorOf(CustomizeErrorCode.NOT_LOGIN);
         }
 
-        if(commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())){
+        if(commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())){//评论为空
             return ResultDTO.errorOf(CustomizeErrorCode.COMMENT_IS_EMPTY);
         }
 
@@ -56,7 +56,7 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
     public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id){
-        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);//获取该问题的评论
         return ResultDTO.okOf(commentDTOS);
     }
 }

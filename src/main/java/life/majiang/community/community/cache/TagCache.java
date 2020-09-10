@@ -39,6 +39,7 @@ public class TagCache {
         return tagDTOS;
     }
 
+    //筛选非法标签
     public static String filterInvalid(String tags){
         String[] split = StringUtils.split(tags, ",");
         List<TagDTO> tagDTOS = get();

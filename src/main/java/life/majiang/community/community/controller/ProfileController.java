@@ -23,6 +23,7 @@ public class ProfileController {
     private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
+    //我的问题or最新回复
     public String profile(@PathVariable(name = "action") String action,
                           Model model,
                           HttpServletRequest request,
@@ -35,10 +36,10 @@ public class ProfileController {
         if ("questions".equals(action)) {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的提问");
-            PaginationDTO paginationDTO=questionService.list(user.getId(),page,size);
+            PaginationDTO paginationDTO=questionService.list(user.getId(),page,size);//从问题中获得数据
             model.addAttribute("pagination", paginationDTO);
         } else if ("replies".equals(action)) {
-            PaginationDTO paginationDTO=notificationService.list(user.getId(),page,size);
+            PaginationDTO paginationDTO=notificationService.list(user.getId(),page,size);//从提示中获得数据
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
             model.addAttribute("pagination", paginationDTO);
